@@ -9,18 +9,24 @@ namespace Mandelbrot
 {
     class MandelNumber
     {
-        Point location;
+        double beginX, beginY;
 
-        public MandelNumber(Point p)
+        public MandelNumber(double a, double b)
         {
-            location = p;
+            beginX = a;
+            beginY = b;
         }
 
-        private int CalculateMandelNumber(double a, double b, int mandelnumber = 1)
+        public int CalculateMandelNumber()
         {
-            if (DistanceToOrigin(a, b) >= 2)
+            return CalculateNumber(beginX, beginY);
+        }
+
+        private int CalculateNumber(double a, double b, int mandelnumber = 1)
+        {
+            if (DistanceToOrigin(a, b) >= 2 || mandelnumber >= 100)
                 return mandelnumber;
-            return CalculateMandelNumber(Math.Pow(a, 2) - Math.Pow(b, 2) + location.X, 2 * a * b + location.Y, mandelnumber + 1); 
+            return CalculateNumber(Math.Pow(a, 2) - Math.Pow(b, 2) + beginX, 2 * a * b + beginY, mandelnumber + 1); 
         }
 
         private double DistanceToOrigin(double x, double y)
