@@ -9,20 +9,20 @@ namespace Mandelbrot
 {
     class MandelNumber
     {
-        double beginX, beginY;
+        double x, y;
 
         public int CalculateMandelNumber(double a, double b)
         {
-            beginX = a;
-            beginY = b;
-            return CalculateNumber(beginX, beginY);
+            x = a;
+            y = b;
+            return CalculateNumber(x, y);
         }
 
         private int CalculateNumber(double a, double b, int mandelnumber = 1)
         {
             if (DistanceToOrigin(a, b) >= 2 || mandelnumber >= 100)
                 return mandelnumber;
-            return CalculateNumber(Math.Pow(a, 2) - Math.Pow(b, 2) + beginX, 2 * a * b + beginY, mandelnumber + 1); 
+            return CalculateNumber(Math.Pow(a, 2) - Math.Pow(b, 2) + x, 2 * a * b + y, mandelnumber + 1); 
         }
 
         private double DistanceToOrigin(double x, double y)
