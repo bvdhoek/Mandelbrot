@@ -9,7 +9,7 @@ namespace Mandelbrot
     class Program
     {
         static void Main(string[] args)
-        { boop
+        {    
         }
     }
 }
