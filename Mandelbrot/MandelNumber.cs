@@ -11,14 +11,10 @@ namespace Mandelbrot
     {
         double beginX, beginY;
 
-        public MandelNumber(double a, double b)
+        public int CalculateMandelNumber(double a, double b)
         {
             beginX = a;
             beginY = b;
-        }
-
-        public int CalculateMandelNumber()
-        {
             return CalculateNumber(beginX, beginY);
         }
 
