@@ -1,0 +1,1 @@
+C:\Users\bernd\src\imperatief programmeren\Mandelbrot\Mandelbrot\bin\Debug\Mandelbrot.exe.config
