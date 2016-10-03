@@ -1,5 +1,7 @@
-bin/
-obj/
-App.config
-/.vs/
-Mandelbrot.sln
+*
+
+!*.cs
+!*.Designer.cs
+!*.resx
+
+!*/
