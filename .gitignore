@@ -1,5 +1,6 @@
 *
 
+!.gitignore
 !*.cs
 !*.Designer.cs
 !*.resx
