@@ -1,30 +1,38 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
 
 namespace Mandelbrot
 {
     class MandelNumber
     {
-        double x, y;
-        int maxNumber;
+        private double x, y;
+        private int maxNumber;
+        private ColorPicker colorPicker;
 
-        public int CalculateMandelNumber(double a, double b, int maxNumber = 100)
+        public MandelNumber(int max, ColorPicker colorPicker)
         {
-            this.maxNumber = maxNumber;
+            this.colorPicker = colorPicker;
+            maxNumber = max;
+        }
+
+        public Color mandelColor(double a, double b)
+        {
+            return colorPicker.getColorByMandelnumber(CalculateMandelNumber(a, b));
+        }
+
+        private int CalculateMandelNumber(double a, double b)
+        {
             x = a;
             y = b;
             return CalculateNumber(x, y);
-        }
-
-        public void setMaxNumber(int maxNumber)
-        {
-            this.maxNumber = maxNumber;
         }
 
         private int CalculateNumber(double a, double b, int mandelnumber = 1)
         {
             if (DistanceToOrigin(a, b) >= 2 || mandelnumber >= maxNumber)
                 return mandelnumber;
-            return CalculateNumber(Math.Pow(a, 2) - Math.Pow(b, 2) + x, 2 * a * b + y, mandelnumber + 1); 
+            return CalculateNumber(Math.Pow(a, 2) - Math.Pow(b, 2) + x, 2 * a * b + y, mandelnumber + 1);
         }
 
         private double DistanceToOrigin(double x, double y)
