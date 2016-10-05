@@ -1,37 +1,48 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
+﻿using System.Drawing;
+using System.Threading;
 using System.Threading.Tasks;
+using System;
+using System.Drawing.Imaging;
 
 namespace Mandelbrot
 {
     class MandelDrawer
     {
         double lb, rb, tb, bb; // leftbound rightbound topbound bottombound
+        UserInterface ui;
+        MandelNumber mandelNumber;
 
-        public MandelDrawer(double lb, double rb, double tb, double bb)
+        public MandelDrawer(double centerX, double centerY, double baseValue, UserInterface ui)
         {
-            this.lb = lb;
-            this.rb = rb;
-            this.tb = tb;
-            this.bb = bb;
+            this.ui = ui;
+            mandelNumber = new MandelNumber(ui.getMaxNumber(), new ColorPicker(ui.getRedMultiplier(), ui.getGreenMultiplier(), ui.getBlueMultiplier()));
+            lb = centerX - baseValue;
+            rb = centerX + baseValue;
+            tb = centerY + baseValue;
+            bb = centerY - baseValue;
         }
 
-        public Bitmap list()
+        public Bitmap toBitmap()
         {
-            return null;
+            Bitmap mandelDrawing = new Bitmap(ui.getPanelWidth(), ui.getPanelHeight());
+            for (int pixelRow = 1; pixelRow < ui.getPanelWidth(); pixelRow++)
+            {
+                for (int pixelColumn = 1; pixelColumn < ui.getPanelHeight(); pixelColumn++)
+                {
+                    mandelDrawing.SetPixel(pixelRow, pixelColumn, mandelNumber.mandelColor(getXLocation(pixelRow), getYLocation(pixelColumn)));
+                }
+            }
+            return mandelDrawing;
         }
 
-        private double getXLocation(double x, double y)
+        private double getXLocation(int pixelColumn)
         {
-            return (rb - lb) / x + lb;
+            return lb + (rb - lb) / ui.getPanelWidth() * pixelColumn;
         }
 
-        private double getYLocation(double x, double y)
+        private double getYLocation(int pixelRow)
         {
-            return (tb - bb) / y + bb;
+            return bb + (tb - bb) / ui.getPanelHeight() * pixelRow;
         }
     }
 }

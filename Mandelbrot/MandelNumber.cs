@@ -1,48 +1,31 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace Mandelbrot
 {
     class MandelNumber
     {
-        double x, y;
-        int maxNumber, mandelNumber;
-        Color color;
+        private double x, y;
+        private int maxNumber;
+        private ColorPicker colorPicker;
 
-        public MandelNumber(double a, double b)
+        public MandelNumber(int max, ColorPicker colorPicker)
         {
-            mandelNumber = CalculateMandelNumber(a, b);
-            color = mandelColor();
+            this.colorPicker = colorPicker;
+            maxNumber = max;
         }
 
-        public Color getColor()
+        public Color mandelColor(double a, double b)
         {
-            return color;
+            return colorPicker.getColorByMandelnumber(CalculateMandelNumber(a, b));
         }
 
-        public int getNumber()
+        private int CalculateMandelNumber(double a, double b)
         {
-            return mandelNumber;
-        }
-
-        private Color mandelColor()
-        {
-            if (mandelNumber % 2 == 0)
-                return Color.Black;
-            return Color.White;
-        }
-
-        private int CalculateMandelNumber(double a, double b, int maxNumber = 100)
-        {
-            this.maxNumber = maxNumber;
             x = a;
             y = b;
             return CalculateNumber(x, y);
-        }
-
-        public void setMaxNumber(int maxNumber)
-        {
-            this.maxNumber = maxNumber;
         }
 
         private int CalculateNumber(double a, double b, int mandelnumber = 1)

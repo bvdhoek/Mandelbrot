@@ -45,8 +45,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ColorPicker.cs" />
     <Compile Include="MandelDrawer.cs" />
     <Compile Include="MandelNumber.cs" />
+    <Compile Include="Preset.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserInterface.cs">
