@@ -7,6 +7,7 @@ namespace Mandelbrot
         static void Main(string[] args)
         {
             UserInterface ui = new UserInterface();
+            Application.EnableVisualStyles();
             Application.Run(ui);
         }
     }

@@ -21,26 +21,48 @@ namespace Mandelbrot
             tb = centerY + baseValue;
             bb = centerY - baseValue;
         }
-
-        public Bitmap toBitmap()
+        /* 
+         * Reserve memory the size of the bitmap and write the pixelcolours directly into the memory.
+         * This makes the method run faster because it doesn't need to reserve memory separately for
+         * every pixel that needs to be drawn.
+         */
+        public unsafe Bitmap toBitmap()
         {
             Bitmap mandelDrawing = new Bitmap(ui.getPanelWidth(), ui.getPanelHeight());
-            for (int pixelRow = 1; pixelRow < ui.getPanelWidth(); pixelRow++)
+
+            Rectangle rect = new Rectangle(0, 0, mandelDrawing.Width, mandelDrawing.Height);
+            // Lock the bits
+            BitmapData mandelDrawingData =
+                mandelDrawing.LockBits(rect, ImageLockMode.WriteOnly,
+                PixelFormat.Format32bppPArgb); 
+
+            // Get the address of the first line.
+            uint* ptr = (uint*)mandelDrawingData.Scan0;
+
+            for (int pixelColumn = 1; pixelColumn < ui.getPanelHeight(); pixelColumn++)
             {
-                for (int pixelColumn = 1; pixelColumn < ui.getPanelHeight(); pixelColumn++)
+                uint* line = ptr;
+
+                for (int pixelRow = 1; pixelRow < ui.getPanelWidth(); pixelRow++)
                 {
-                    mandelDrawing.SetPixel(pixelRow, pixelColumn, mandelNumber.mandelColor(getXLocation(pixelRow), getYLocation(pixelColumn)));
+                    *line++ = (uint)mandelNumber.mandelColor(getXLocation(pixelRow), getYLocation(pixelColumn)).ToArgb();
                 }
+                // Set pointer to next line
+                ptr += mandelDrawingData.Stride / 4;
             }
+
+            // Unlock the bits.
+            mandelDrawing.UnlockBits(mandelDrawingData);
+
             return mandelDrawing;
         }
 
-        private double getXLocation(int pixelColumn)
+        private double getXLocation(int pixelColumn) // Converts x location in pixels to coordinates
         {
             return lb + (rb - lb) / ui.getPanelWidth() * pixelColumn;
         }
 
-        private double getYLocation(int pixelRow)
+        private double getYLocation(int pixelRow) // Converts y location in pixels to coordinates
         {
             return bb + (tb - bb) / ui.getPanelHeight() * pixelRow;
         }

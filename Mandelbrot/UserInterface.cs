@@ -8,7 +8,7 @@ namespace Mandelbrot
     public partial class UserInterface : Form
     {
         private Bitmap mandelnumberList;
-        private const int SCALEMULTIPLIER = 250;
+        private const int SCALEMULTIPLIER = 250; 
         private List<Preset> presets = new List<Preset>();
 
         public UserInterface()
@@ -16,12 +16,13 @@ namespace Mandelbrot
             InitializeComponent();
             InitializePresets();
             setTabIndex();
+            splitContainer.IsSplitterFixed = true;
             drawMandelbrot();
         }
-
-        private void InitializePresets()
+        
+        private void InitializePresets() // list of preset values and names
         {
-            presets.Add(new Preset("name", 6, 3, 10, 100, 0.325, 0.5, 4E-5));
+            presets.Add(new Preset("Purple Lagoon", 6, 3, 10, 100, 0.325, 0.5, 4E-5));
             presets.Add(new Preset("Bolt", 9, 9, 2, 100, -0.125, -0.8, 8E-4));
             presets.Add(new Preset("Snowflake", 1, 2, 4, 100, -0.1, -0.96, 1E-4));
             foreach (Preset p in presets)
@@ -30,7 +31,7 @@ namespace Mandelbrot
             }
         }
 
-        private void setTabIndex()
+        private void setTabIndex() // Change inputtextbox with tab
         {
             scaleTextBox.TabIndex = 0;
             maxTextBox.TabIndex = 1;

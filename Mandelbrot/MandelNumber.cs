@@ -30,14 +30,15 @@ namespace Mandelbrot
 
         private int CalculateNumber(double a, double b, int mandelnumber = 1)
         {
-            if (DistanceToOrigin(a, b) >= 2 || mandelnumber >= maxNumber)
+            if (Distance(a, b) >= 4 || mandelnumber >= maxNumber)
                 return mandelnumber;
-            return CalculateNumber(Math.Pow(a, 2) - Math.Pow(b, 2) + x, 2 * a * b + y, mandelnumber + 1);
+            return CalculateNumber(a*a - b*b + x, 2 * a * b + y, mandelnumber + 1);
         }
 
-        private double DistanceToOrigin(double x, double y)
+        public double Distance(double x, double y)
         {
-            return Math.Sqrt((Math.Pow(x, 2) + Math.Pow(y, 2)));
+            return x * x + y * y;
         }
+
     }
 }
