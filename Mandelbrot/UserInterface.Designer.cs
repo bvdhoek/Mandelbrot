@@ -54,12 +54,12 @@
             // 
             this.splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer.Margin = new System.Windows.Forms.Padding(4);
             this.splitContainer.Name = "splitContainer";
             // 
             // splitContainer.Panel1
             // 
-            this.splitContainer.Panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.mandelbrot_Paint);
+            this.splitContainer.Panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.Mandelbrot_Paint);
+            this.splitContainer.Panel1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Zoom);
             // 
             // splitContainer.Panel2
             // 
@@ -79,169 +79,164 @@
             this.splitContainer.Panel2.Controls.Add(this.maxLabel);
             this.splitContainer.Panel2.Controls.Add(this.scaleLabel);
             this.splitContainer.Panel2.Controls.Add(this.runButton);
-            this.splitContainer.Size = new System.Drawing.Size(1331, 753);
-            this.splitContainer.SplitterDistance = 1005;
-            this.splitContainer.SplitterWidth = 5;
+            this.splitContainer.Size = new System.Drawing.Size(998, 602);
+            this.splitContainer.SplitterDistance = 753;
             this.splitContainer.TabIndex = 0;
             // 
             // presetBox
             // 
             this.presetBox.FormattingEnabled = true;
-            this.presetBox.ItemHeight = 16;
-            this.presetBox.Location = new System.Drawing.Point(24, 321);
+            this.presetBox.Location = new System.Drawing.Point(18, 261);
+            this.presetBox.Margin = new System.Windows.Forms.Padding(2);
             this.presetBox.Name = "presetBox";
-            this.presetBox.Size = new System.Drawing.Size(247, 84);
+            this.presetBox.Size = new System.Drawing.Size(186, 43);
             this.presetBox.TabIndex = 16;
-            this.presetBox.SelectedIndexChanged += new System.EventHandler(this.loadPresetValues);
+            this.presetBox.SelectedIndexChanged += new System.EventHandler(this.LoadPresetValues);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(21, 233);
+            this.label3.Location = new System.Drawing.Point(16, 189);
+            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(100, 17);
+            this.label3.Size = new System.Drawing.Size(75, 13);
             this.label3.TabIndex = 15;
             this.label3.Text = "Blue Multiplier:";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(21, 205);
+            this.label2.Location = new System.Drawing.Point(16, 167);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(112, 17);
+            this.label2.Size = new System.Drawing.Size(83, 13);
             this.label2.TabIndex = 14;
             this.label2.Text = "Green Multiplier:";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(21, 177);
+            this.label1.Location = new System.Drawing.Point(16, 144);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(98, 17);
+            this.label1.Size = new System.Drawing.Size(74, 13);
             this.label1.TabIndex = 13;
             this.label1.Text = "Red Multiplier:";
             // 
             // redMultiplierTextBox
             // 
-            this.redMultiplierTextBox.Location = new System.Drawing.Point(139, 174);
+            this.redMultiplierTextBox.Location = new System.Drawing.Point(104, 141);
+            this.redMultiplierTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.redMultiplierTextBox.Name = "redMultiplierTextBox";
-            this.redMultiplierTextBox.Size = new System.Drawing.Size(132, 22);
+            this.redMultiplierTextBox.Size = new System.Drawing.Size(100, 20);
             this.redMultiplierTextBox.TabIndex = 12;
-            this.redMultiplierTextBox.Text = "5";
+            this.redMultiplierTextBox.Text = "9";
             // 
             // greenMultiplierTextBox
             // 
-            this.greenMultiplierTextBox.Location = new System.Drawing.Point(139, 202);
+            this.greenMultiplierTextBox.Location = new System.Drawing.Point(104, 164);
+            this.greenMultiplierTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.greenMultiplierTextBox.Name = "greenMultiplierTextBox";
-            this.greenMultiplierTextBox.Size = new System.Drawing.Size(132, 22);
+            this.greenMultiplierTextBox.Size = new System.Drawing.Size(100, 20);
             this.greenMultiplierTextBox.TabIndex = 11;
-            this.greenMultiplierTextBox.Text = "25";
+            this.greenMultiplierTextBox.Text = "5";
             // 
             // blueMultiplierTextBox
             // 
-            this.blueMultiplierTextBox.Location = new System.Drawing.Point(139, 230);
+            this.blueMultiplierTextBox.Location = new System.Drawing.Point(104, 187);
+            this.blueMultiplierTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.blueMultiplierTextBox.Name = "blueMultiplierTextBox";
-            this.blueMultiplierTextBox.Size = new System.Drawing.Size(132, 22);
+            this.blueMultiplierTextBox.Size = new System.Drawing.Size(100, 20);
             this.blueMultiplierTextBox.TabIndex = 10;
-            this.blueMultiplierTextBox.Text = "50";
+            this.blueMultiplierTextBox.Text = "3";
             // 
             // scaleTextBox
             // 
-            this.scaleTextBox.Location = new System.Drawing.Point(139, 49);
-            this.scaleTextBox.Margin = new System.Windows.Forms.Padding(4);
+            this.scaleTextBox.Location = new System.Drawing.Point(104, 40);
             this.scaleTextBox.Name = "scaleTextBox";
-            this.scaleTextBox.Size = new System.Drawing.Size(132, 22);
+            this.scaleTextBox.Size = new System.Drawing.Size(100, 20);
             this.scaleTextBox.TabIndex = 9;
-            this.scaleTextBox.Text = "0.01";
+            this.scaleTextBox.Text = "1E-2";
             // 
             // maxTextBox
             // 
-            this.maxTextBox.Location = new System.Drawing.Point(139, 81);
-            this.maxTextBox.Margin = new System.Windows.Forms.Padding(4);
+            this.maxTextBox.Location = new System.Drawing.Point(104, 66);
             this.maxTextBox.Name = "maxTextBox";
-            this.maxTextBox.Size = new System.Drawing.Size(132, 22);
+            this.maxTextBox.Size = new System.Drawing.Size(100, 20);
             this.maxTextBox.TabIndex = 8;
-            this.maxTextBox.Text = "100";
+            this.maxTextBox.Text = "255";
             // 
             // centerXTextBox
             // 
-            this.centerXTextBox.Location = new System.Drawing.Point(139, 113);
-            this.centerXTextBox.Margin = new System.Windows.Forms.Padding(4);
+            this.centerXTextBox.Location = new System.Drawing.Point(104, 92);
             this.centerXTextBox.Name = "centerXTextBox";
-            this.centerXTextBox.Size = new System.Drawing.Size(132, 22);
+            this.centerXTextBox.Size = new System.Drawing.Size(100, 20);
             this.centerXTextBox.TabIndex = 7;
             this.centerXTextBox.Text = "0";
             // 
             // centerYTextBox
             // 
-            this.centerYTextBox.Location = new System.Drawing.Point(139, 145);
-            this.centerYTextBox.Margin = new System.Windows.Forms.Padding(4);
+            this.centerYTextBox.Location = new System.Drawing.Point(104, 118);
             this.centerYTextBox.Name = "centerYTextBox";
-            this.centerYTextBox.Size = new System.Drawing.Size(132, 22);
+            this.centerYTextBox.Size = new System.Drawing.Size(100, 20);
             this.centerYTextBox.TabIndex = 6;
             this.centerYTextBox.Text = "0";
             // 
             // centerYLabel
             // 
             this.centerYLabel.AutoSize = true;
-            this.centerYLabel.Location = new System.Drawing.Point(21, 149);
-            this.centerYLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.centerYLabel.Location = new System.Drawing.Point(16, 121);
             this.centerYLabel.Name = "centerYLabel";
-            this.centerYLabel.Size = new System.Drawing.Size(71, 17);
+            this.centerYLabel.Size = new System.Drawing.Size(55, 13);
             this.centerYLabel.TabIndex = 5;
             this.centerYLabel.Text = "Midden Y:";
             // 
             // centerXLabel
             // 
             this.centerXLabel.AutoSize = true;
-            this.centerXLabel.Location = new System.Drawing.Point(21, 117);
-            this.centerXLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.centerXLabel.Location = new System.Drawing.Point(16, 95);
             this.centerXLabel.Name = "centerXLabel";
-            this.centerXLabel.Size = new System.Drawing.Size(71, 17);
+            this.centerXLabel.Size = new System.Drawing.Size(55, 13);
             this.centerXLabel.TabIndex = 4;
             this.centerXLabel.Text = "Midden X:";
             // 
             // maxLabel
             // 
             this.maxLabel.AutoSize = true;
-            this.maxLabel.Location = new System.Drawing.Point(21, 85);
-            this.maxLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.maxLabel.Location = new System.Drawing.Point(16, 69);
             this.maxLabel.Name = "maxLabel";
-            this.maxLabel.Size = new System.Drawing.Size(37, 17);
+            this.maxLabel.Size = new System.Drawing.Size(30, 13);
             this.maxLabel.TabIndex = 3;
             this.maxLabel.Text = "Max:";
             // 
             // scaleLabel
             // 
             this.scaleLabel.AutoSize = true;
-            this.scaleLabel.Location = new System.Drawing.Point(21, 53);
-            this.scaleLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.scaleLabel.Location = new System.Drawing.Point(16, 43);
             this.scaleLabel.Name = "scaleLabel";
-            this.scaleLabel.Size = new System.Drawing.Size(55, 17);
+            this.scaleLabel.Size = new System.Drawing.Size(43, 13);
             this.scaleLabel.TabIndex = 2;
             this.scaleLabel.Text = "Schaal:";
             // 
             // runButton
             // 
-            this.runButton.Location = new System.Drawing.Point(24, 259);
-            this.runButton.Margin = new System.Windows.Forms.Padding(4);
+            this.runButton.Location = new System.Drawing.Point(18, 210);
             this.runButton.Name = "runButton";
-            this.runButton.Size = new System.Drawing.Size(247, 38);
+            this.runButton.Size = new System.Drawing.Size(185, 31);
             this.runButton.TabIndex = 1;
             this.runButton.Text = "RUN";
             this.runButton.UseVisualStyleBackColor = true;
-            this.runButton.Click += new System.EventHandler(this.runButton_Click);
+            this.runButton.Click += new System.EventHandler(this.RunButton_Click);
             // 
             // UserInterface
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1331, 753);
+            this.ClientSize = new System.Drawing.Size(998, 602);
             this.Controls.Add(this.splitContainer);
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "UserInterface";
             this.Text = "UserInterface";
-            this.ResizeEnd += new System.EventHandler(this.drawResizedMandelbrot);
+            this.ResizeEnd += new System.EventHandler(this.DrawResizedMandelbrot);
             this.splitContainer.Panel2.ResumeLayout(false);
             this.splitContainer.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();

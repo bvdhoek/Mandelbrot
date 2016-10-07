@@ -8,18 +8,15 @@ namespace Mandelbrot
 {
     class MandelDrawer
     {
-        double lb, rb, tb, bb; // leftbound rightbound topbound bottombound
         UserInterface ui;
         MandelNumber mandelNumber;
+        Coordinates coordinates;
 
-        public MandelDrawer(double centerX, double centerY, double baseValue, UserInterface ui)
+        public MandelDrawer(Coordinates coordinates, UserInterface ui)
         {
+            this.coordinates = coordinates;
             this.ui = ui;
-            mandelNumber = new MandelNumber(ui.getMaxNumber(), new ColorPicker(ui.getRedMultiplier(), ui.getGreenMultiplier(), ui.getBlueMultiplier()));
-            lb = centerX - baseValue;
-            rb = centerX + baseValue;
-            tb = centerY + baseValue;
-            bb = centerY - baseValue;
+            mandelNumber = new MandelNumber(ui.GetMaxNumber(), new ColorPicker(ui.GetRedMultiplier(), ui.GetGreenMultiplier(), ui.GetBlueMultiplier()));
         }
         /* 
          * Reserve memory the size of the bitmap and write the pixelcolours directly into the memory.
@@ -28,7 +25,7 @@ namespace Mandelbrot
          */
         public unsafe Bitmap toBitmap()
         {
-            Bitmap mandelDrawing = new Bitmap(ui.getPanelWidth(), ui.getPanelHeight());
+            Bitmap mandelDrawing = new Bitmap(ui.GetPanelWidth(), ui.GetPanelHeight());
 
             Rectangle rect = new Rectangle(0, 0, mandelDrawing.Width, mandelDrawing.Height);
             // Lock the bits
@@ -37,15 +34,15 @@ namespace Mandelbrot
                 PixelFormat.Format32bppPArgb); 
 
             // Get the address of the first line.
-            uint* ptr = (uint*)mandelDrawingData.Scan0;
+            uint* ptr = (uint*) mandelDrawingData.Scan0;
 
-            for (int pixelColumn = 1; pixelColumn < ui.getPanelHeight(); pixelColumn++)
+            for (int pixelColumn = 1; pixelColumn < ui.GetPanelHeight(); pixelColumn++)
             {
                 uint* line = ptr;
 
-                for (int pixelRow = 1; pixelRow < ui.getPanelWidth(); pixelRow++)
+                for (int pixelRow = 1; pixelRow < ui.GetPanelWidth(); pixelRow++)
                 {
-                    *line++ = (uint)mandelNumber.mandelColor(getXLocation(pixelRow), getYLocation(pixelColumn)).ToArgb();
+                    *line++ = (uint) mandelNumber.MandelColor(coordinates.GetXLocation(pixelRow), coordinates.GetYLocation(pixelColumn)).ToArgb();
                 }
                 // Set pointer to next line
                 ptr += mandelDrawingData.Stride / 4;
@@ -55,16 +52,6 @@ namespace Mandelbrot
             mandelDrawing.UnlockBits(mandelDrawingData);
 
             return mandelDrawing;
-        }
-
-        private double getXLocation(int pixelColumn) // Converts x location in pixels to coordinates
-        {
-            return lb + (rb - lb) / ui.getPanelWidth() * pixelColumn;
-        }
-
-        private double getYLocation(int pixelRow) // Converts y location in pixels to coordinates
-        {
-            return bb + (tb - bb) / ui.getPanelHeight() * pixelRow;
         }
     }
 }

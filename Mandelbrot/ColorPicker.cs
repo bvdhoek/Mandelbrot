@@ -13,7 +13,7 @@ namespace Mandelbrot
             this.blueMultiplier = blueMultiplier;
         }
 
-        public Color getColorByMandelnumber(int mandelnumber)
+        public Color GetColorByMandelnumber(int mandelnumber)
         {
             return Color.FromArgb(
                 (redMultiplier * mandelnumber) % 255,

@@ -10,14 +10,16 @@ namespace Mandelbrot
         private Bitmap mandelnumberList;
         private const int SCALEMULTIPLIER = 250; 
         private List<Preset> presets = new List<Preset>();
+        private Coordinates coordinates;
 
         public UserInterface()
         {
             InitializeComponent();
             InitializePresets();
-            setTabIndex();
+            SetTabIndex();
             splitContainer.IsSplitterFixed = true;
-            drawMandelbrot();
+            SetCoordinates();
+            DrawMandelbrot();
         }
         
         private void InitializePresets() // list of preset values and names
@@ -31,7 +33,7 @@ namespace Mandelbrot
             }
         }
 
-        private void setTabIndex() // Change inputtextbox with tab
+        private void SetTabIndex() // Change inputtextbox with tab
         {
             scaleTextBox.TabIndex = 0;
             maxTextBox.TabIndex = 1;
@@ -43,63 +45,62 @@ namespace Mandelbrot
             runButton.TabIndex = 7;
         }
 
-        public int getPanelWidth()
+        public int GetPanelWidth()
         {
             return splitContainer.Panel1.Width;
         }
 
-        public int getPanelHeight()
+        public int GetPanelHeight()
         {
             return splitContainer.Panel1.Height;
         }
 
-        public int getMaxNumber()
+        public int GetMaxNumber()
         {
             return Convert.ToInt16(maxTextBox.Text);
         }
 
-        public int getRedMultiplier()
+        public int GetRedMultiplier()
         {
             return Convert.ToInt16(redMultiplierTextBox.Text);
         }
 
-        public int getGreenMultiplier()
+        public int GetGreenMultiplier()
         {
             return Convert.ToInt16(greenMultiplierTextBox.Text);
         }
 
-        public int getBlueMultiplier()
+        public int GetBlueMultiplier()
         {
             return Convert.ToInt16(blueMultiplierTextBox.Text);
         }
 
-        private void runButton_Click(object sender, EventArgs e)
+        private void RunButton_Click(object sender, EventArgs e)
         {
-            drawMandelbrot();
+            DrawMandelbrot();
         }
 
-        private void mandelbrot_Paint(object sender, PaintEventArgs e)
+        private void Mandelbrot_Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.DrawImageUnscaled(mandelnumberList, Point.Empty);
         }
 
-        private void drawResizedMandelbrot(object sender, EventArgs e)
+        private void DrawResizedMandelbrot(object sender, EventArgs e)
         {
-            drawMandelbrot();
+            DrawMandelbrot();
         }
 
-        private void drawMandelbrot()
+        private void DrawMandelbrot()
         {
+            SetCoordinates();
             mandelnumberList = new MandelDrawer(
-                                   Convert.ToDouble(centerXTextBox.Text),
-                                   Convert.ToDouble(centerYTextBox.Text),
-                                   Convert.ToDouble(scaleTextBox.Text) * SCALEMULTIPLIER,
+                                   coordinates,
                                    this
                               ).toBitmap();
             splitContainer.Panel1.Invalidate();
         }
 
-        private void loadPresetValues(object sender, EventArgs e)
+        private void LoadPresetValues(object sender, EventArgs e)
         {
             foreach (Preset p in presets)
             {
@@ -112,9 +113,27 @@ namespace Mandelbrot
                     redMultiplierTextBox.Text = p.r.ToString();
                     greenMultiplierTextBox.Text = p.g.ToString();
                     blueMultiplierTextBox.Text = p.b.ToString();
-                    drawMandelbrot();
+                    DrawMandelbrot();
                 }
             }
+        }
+
+        private void SetCoordinates()
+        {
+            coordinates = new Coordinates(
+                            Convert.ToDouble(centerXTextBox.Text),
+                            Convert.ToDouble(centerYTextBox.Text),
+                            Convert.ToDouble(scaleTextBox.Text) * SCALEMULTIPLIER,
+                            this
+                          );
+        }
+
+        private void Zoom(object sender, MouseEventArgs e)
+        {
+            centerXTextBox.Text = Convert.ToString(coordinates.GetXLocation(e.X));
+            centerYTextBox.Text = Convert.ToString(coordinates.GetYLocation(e.Y));
+            scaleTextBox.Text = Convert.ToString(Convert.ToDouble(scaleTextBox.Text) / 2);
+            DrawMandelbrot();
         }
     }
 }

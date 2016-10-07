@@ -16,9 +16,9 @@ namespace Mandelbrot
             maxNumber = max;
         }
 
-        public Color mandelColor(double a, double b)
+        public Color MandelColor(double a, double b)
         {
-            return colorPicker.getColorByMandelnumber(CalculateMandelNumber(a, b));
+            return colorPicker.GetColorByMandelnumber(CalculateMandelNumber(a, b));
         }
 
         private int CalculateMandelNumber(double a, double b)
